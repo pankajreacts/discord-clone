@@ -17,6 +17,7 @@ import db, { auth } from "./firebase";
 
 function Sidebar() {
   const user = useSelector(selectUser);
+  console.log(user);
   const [channels, setChannels] = useState([]);
 
   useEffect(() => {
@@ -31,7 +32,7 @@ function Sidebar() {
   }, []);
 
   const handleAddChannel = () => {
-    const channelName = prompt("Enter a new channel name");
+    const channelName = prompt("Enter a new group name");
 
     if (channelName) {
       db.collection("channels").add({
@@ -50,7 +51,7 @@ function Sidebar() {
         <div className="sidebar__channelsHeader">
           <div className="sidebar__header">
             <ExpandMoreIcon />
-            <h4>Text Channels</h4>
+            <h4>All Groups</h4>
           </div>
           <AddIcon onClick={handleAddChannel} className="sidebar__addChannel" />
         </div>
@@ -60,25 +61,12 @@ function Sidebar() {
           ))}
         </div>
       </div>
-      <div className="sidebar__voice">
-        <SignalCellularAltIcon
-          className="sidebar__voiceIcon"
-          fontSize="large"
-        />
-        <div className="sidebar__voiceInfo">
-          <h3>Voice Connected</h3>
-          <p>Stream</p>
-        </div>
-        <div className="sidebar__voiceIcons">
-          <InfoOutlinedIcon />
-          <CallIcon />
-        </div>
-      </div>
+
       <div className="sidebar__profile">
         <Avatar src={user.photo} onClick={() => auth.signOut()} />
         <div className="sidebar__profileInfo">
           <h3>{user.displayName}</h3>
-          <p>{user.uid.substring(0, 5)}</p>
+          <p>{user.uid.substring(0, 10)}</p>
         </div>
         <div className="sidebar__profileIcons">
           <MicIcon />
